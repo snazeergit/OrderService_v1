@@ -6,7 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
+/*
+We are checking if users (admin or user) are available in Users table or not. If not, we are creating them and saving them in the database.
+ */
 @Component
 public class AdminUserInitializer {
 
