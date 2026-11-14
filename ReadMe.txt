@@ -1,5 +1,7 @@
+This is a Spring Boot application that demonstrates how to configure JWT authentication.
+
 #Endpoints:
------------------------------------------------------------
+------------------------------------------------------------
 | Method |              Endpoint        |        Typical use
 |---------|-----------------------|--------------------------
 | GET       | /api/v1/orders             | List orders
