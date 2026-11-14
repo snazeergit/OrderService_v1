@@ -1,3 +1,4 @@
+This is a Spring Boot application that demonstrates how to configure authentication using BCrypt password encoding and a custom UserDetailsService.
 #Endpoints:
 -----------------------------------------------------------
 | Method |              Endpoint        |        Typical use
