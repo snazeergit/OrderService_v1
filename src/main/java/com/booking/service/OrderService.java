@@ -28,11 +28,11 @@ public class OrderService {
     }
 
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+        return orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("No order exists with the supplied ID."));
     }
 
     public String updateOrder(Long id, Order order) {
-        Order existing = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+        Order existing = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("No order exists with the supplied ID."));
         existing.setCustomerName(order.getCustomerName());
         existing.setProduct(order.getProduct());
         existing.setQuantity(order.getQuantity());
@@ -41,13 +41,13 @@ public class OrderService {
     }
 
     public String deleteOrder(Long id) {
-        orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+        orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("No order exists with the supplied ID."));
         orderRepository.deleteById(id);
         return "Order deleted successfully!";
     }
 
     public String updateOrderProperties(Long id, Order order) {
-        Order existing = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+        Order existing = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("No order exists with the supplied ID."));
         if (order.getCustomerName() != null)
             existing.setCustomerName(order.getCustomerName());
         if (order.getProduct() != null)
