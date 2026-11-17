@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,10 +41,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/v1/auth/login", "/api/v1/orders/health").permitAll()
                         .anyRequest().authenticated())
-                     //.httpBasic(Customizer.withDefaults())
-                //we disable the http authentication and use jwt token authentication using the jwtAuthFilter
-                // before UsernamePasswordAuthenticationFilter
+                .httpBasic(AbstractHttpConfigurer::disable)   // disabled  Http basic authentication
+                .formLogin(AbstractHttpConfigurer::disable) // disabled Form login authentication
+                // To use jwt token authentication using the jwtAuthFilter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
