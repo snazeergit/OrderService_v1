@@ -28,7 +28,7 @@ public class AdminUserInitializer {
                 Users user2 = new Users();
                 user2.setUsername("user");
                 user2.setPassword(passwordEncoder.encode("user")); // Securely store password
-                user2.setRole("ROLE.USER");
+                user2.setRole("ROLE_USER");
 
                 userRepository.save(user2);
                 System.out.println("Default user created!");
