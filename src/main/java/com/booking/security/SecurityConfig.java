@@ -6,6 +6,7 @@ import com.booking.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,13 +42,15 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/v1/auth/login").permitAll()
-                        //.requestMatchers("/api/v1/orders/health").hasRole("ADMIN") //role based authorization
+                        .requestMatchers(HttpMethod.POST, "/api/v1/orders/**").hasRole("ADMIN")//role based authorization
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/orders/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/orders/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/orders/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/orders/health").hasAuthority(Permissions.WRITE.name()) //Permission based authorization
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)   // disabled  Http basic authentication
                 .formLogin(AbstractHttpConfigurer::disable) // disabled Form login authentication
-                // To use jwt token authentication using the jwtAuthFilter before UsernamePasswordAuthenticationFilter
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)// including jwtAuthFilter before UsernamePasswordAuthenticationFilter
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
