@@ -1,9 +1,7 @@
 package com.booking.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -17,5 +15,6 @@ public class Order {
     private String customerName;
     private String product;
     private Integer quantity;
+    private String createdBy;
 
 }
